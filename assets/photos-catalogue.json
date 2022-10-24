@@ -1,0 +1,24 @@
+{
+  "default": [
+    {
+      "filename": "IMG_5178.PNG",
+      "description": "A sunny day near the real estates",
+      "year": "2021"
+    },
+    {
+      "filename": "IMG_5191.JPG",
+      "description": "A greasy landlord",
+      "year": "2011"
+    },
+    {
+      "filename": "IMG_3820.jpg",
+      "description": "Another example one",
+      "year": "2016"
+    },
+    {
+      "filename": "gorge-du-verdon-1.jpg",
+      "description": "I live by the rocky sea lions",
+      "year": "2008"
+    }
+  ]
+}

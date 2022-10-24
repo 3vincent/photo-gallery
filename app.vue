@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import photosCatalogue from 'assets/photos-catalogue.json'
 
 export default {

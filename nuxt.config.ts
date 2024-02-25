@@ -5,4 +5,11 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
+  modules: ['@nuxt/image'],
+
+  image: {
+    format: ['webp'],
+    // provider: 'static',
+    // staticFilename: '[publicPath]/[name]-[hash][ext]',
+  },
 })

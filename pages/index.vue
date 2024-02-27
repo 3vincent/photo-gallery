@@ -36,6 +36,21 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
       behavior: 'smooth',
     })
 }
+
+onMounted(async () => {
+  const currentHash = router.currentRoute.value.hash
+
+  if (currentHash) {
+    // to remove hash from the url
+    await navigateTo({ hash: '' })
+
+    if (galleryViewMode.value === 'stream') {
+      const element = document.getElementById(currentHash.substring(1))
+
+      element?.scrollIntoView()
+    }
+  }
+})
 </script>
 
 <template>
@@ -76,6 +91,7 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
                 ? `background-image: url(${photo.filename})`
                 : `background-image: url(/photos/${photo.filename})`
             "
+            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           ></div>
         </NuxtLink>
       </div>
@@ -100,6 +116,7 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
               : `/photos/${photo.filename}`
           "
           loading="lazy"
+          :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
         ></NuxtImg>
       </NuxtLink>
     </div>

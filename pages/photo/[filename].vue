@@ -27,11 +27,6 @@ const photo = computed<Photo>(() => {
 const currentRouteQuery = router.currentRoute.value.query
   .parentGallery as String
 
-const goBackToGallery = () => {
-  // router.go(-1)
-  navigateTo(currentRouteQuery as RouteLocationRaw)
-}
-
 const showBackButton = ref(true)
 let timer: ReturnType<typeof setTimeout> | undefined
 
@@ -62,13 +57,16 @@ onMounted(() => {
 <template>
   <div class="container">
     <Transition>
-      <div
+      <NuxtLink
         v-if="currentRouteQuery && showBackButton"
-        @click="goBackToGallery"
         class="go-back-button"
+        :to="{
+          path: `${currentRouteQuery as RouteLocationRaw}`,
+          hash: `#${router.currentRoute.value.params.filename}`,
+        }"
       >
         back to gallery
-      </div>
+      </NuxtLink>
     </Transition>
 
     <ImageViewer :photo="photo" />
@@ -98,6 +96,7 @@ onMounted(() => {
   position: absolute;
   top: 0;
   z-index: 10;
+  text-decoration: none;
 
   font-family:
     system-ui,
@@ -111,5 +110,10 @@ onMounted(() => {
     'Open Sans',
     'Helvetica Neue',
     sans-serif;
+
+  &:visited,
+  &:link {
+    color: black;
+  }
 }
 </style>

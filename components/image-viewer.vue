@@ -1,48 +1,34 @@
 <script setup lang="ts">
-import type { Photo } from '../pages/photo/[filename].vue'
-import type { RouteLocationRaw } from '#vue-router'
+import type { Photo } from '@/helpers/types'
 
 const props = defineProps({
   photo: {
     type: Object as PropType<Photo>,
     default: { filename: 'error.jpg', description: 'test', year: '2019' },
   },
-  parentGallery: {
-    type: String as PropType<String>,
-  },
 })
-
-// const backgroundImage = computed(() => {
-//   return {
-//     '--this-image-url': `url('/photos/${props.photo.filename}')`,
-//   }
-// })
-
-const goBackToGallery = () => {
-  // router.go(-1)
-  navigateTo(props.parentGallery as RouteLocationRaw)
-}
 </script>
 
 <template>
   <div class="container">
-    <div
-      v-if="props.parentGallery"
-      @click="goBackToGallery"
-      class="go-back-button"
-    >
-      back to gallery
-    </div>
-
     <div class="image-container">
-      <!-- <div class="image background" :style="backgroundImage"></div> -->
-
-      <img :src="`/photos/${props.photo.filename}`" />
+      <img
+        :src="
+          photo.filename.includes('http')
+            ? `${props.photo.filename}`
+            : `/photos/${props.photo.filename}`
+        "
+        :alt="`${props.photo.description}, ${props.photo.year}`"
+      />
     </div>
 
-    <div class="text">
-      <p>{{ photo.description }}</p>
-      <p>{{ photo.year }}</p>
+    <div v-if="photo.description || photo.year || photo.title" class="text">
+      <p v-if="photo.title">{{ photo.title }}</p>
+      <p v-if="photo.year">{{ photo.year }}</p>
+      <br />
+      <p v-if="photo.description" class="description">{{
+        photo.description
+      }}</p>
     </div>
   </div>
 </template>
@@ -65,17 +51,12 @@ const goBackToGallery = () => {
   align-items: center;
 
   img {
-    max-height: 80dvh;
     min-height: 80dvh;
-    max-width: 80vw;
+    max-height: 90dvh;
+    max-width: 90vw;
     object-fit: contain;
   }
 }
-
-// .image {
-//   min-height: 80vh;
-//   width: 80vw;
-// }
 
 .background {
   background-image: var(--this-image-url);
@@ -90,19 +71,27 @@ const goBackToGallery = () => {
   padding: 0 0 4rem 0;
 
   p {
-    font-family: Helvetica, Georgia, 'Times New Roman', Times, serif;
-    font-style: italic;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
+
     color: white;
     font-size: 1rem;
     margin: 0;
     padding: 0;
-  }
-}
 
-.go-back-button {
-  background-color: rgb(62, 62, 62);
-  display: inline-block;
-  padding: 0.6rem;
-  cursor: pointer;
+    &.description {
+      font-style: italic;
+    }
+  }
 }
 </style>

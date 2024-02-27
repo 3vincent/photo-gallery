@@ -5,7 +5,11 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  modules: ['@nuxt/image'],
+  modules: ['@nuxt/image', '@pinia/nuxt'],
+
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
 
   image: {
     format: ['webp'],

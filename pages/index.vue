@@ -1,20 +1,40 @@
 <script setup lang="ts">
-import photosCatalogue from '~/assets/photos-catalogue.json'
+import photosCatalogueRaw from '@/assets/photos-catalogue.json'
+import type { Gallery, GalleryViewMode } from '@/helpers/types'
+import { useViewModeStore } from '@/stores/view-mode'
 
-type GalleryViewMode = 'grid' | 'stream'
+/**
+ * TODO:
+ *  - create buttons for prev/next image
+ *  - implement Pinia store to store galleryViewMode state
+ *  - implement gallery as dynamic gallery [gallery], read the gallery name from
+ *    the json file
+ *  - (need to fix the links then...🙄)
+ *  - need a menu then to switch the galleries
+ *  - implement left bar?
+ *  - implement info pages (CV etc.) with MarkDown?
+ */
+
+const photosCatalogue: Gallery = photosCatalogueRaw
+
+const viewModeStore = useViewModeStore()
+const { galleryViewMode } = storeToRefs(viewModeStore)
 
 const mainContainerRef = ref<HTMLElement | null>(null)
-const galleryViewMode = ref<GalleryViewMode>('grid')
 
 const router = useRouter()
 const currentRoute = computed(() => router.currentRoute.value.fullPath)
 
 const toggleGalleryViewMode = (mode: GalleryViewMode) => {
-  if (mode === 'stream') galleryViewMode.value = 'grid'
-  if (mode === 'grid') galleryViewMode.value = 'stream'
+  galleryViewMode.value = mode
 
   const mainContainer = mainContainerRef.value
-  if (mainContainer) mainContainer.scrollTo(0, 0)
+  if (mainContainer)
+    mainContainer.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    })
 }
 </script>
 
@@ -27,52 +47,61 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
     <div class="view-switch">
       <div
         @click="toggleGalleryViewMode('stream')"
-        class="grid"
-        :class="{ active: galleryViewMode === 'grid' }"
+        class="stream"
+        :class="{ active: galleryViewMode === 'stream' }"
       ></div>
 
       <div
         @click="toggleGalleryViewMode('grid')"
-        class="stream"
-        :class="{ active: galleryViewMode === 'stream' }"
+        class="grid"
+        :class="{ active: galleryViewMode === 'grid' }"
       ></div>
-    </div>
-
-    <div
-      v-if="galleryViewMode === 'stream'"
-      class="inner-content stream"
-      v-for="(photo, index) in photosCatalogue.default"
-      :key="index"
-    >
-      <NuxtLink
-        :to="{
-          path: `/photo/${photo.filename.slice(0, photo.filename.indexOf('.'))}`,
-          query: { parentGallery: currentRoute },
-        }"
-      >
-        <NuxtImg :src="`/photos/${photo.filename}`" loading="lazy"></NuxtImg>
-      </NuxtLink>
     </div>
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div
-        v-for="(photo, index) in photosCatalogue.default"
+        v-for="(photo, index) in photosCatalogue.default.images"
         class="image"
         :key="index"
       >
         <NuxtLink
           :to="{
-            path: `/photo/${photo.filename.slice(0, photo.filename.indexOf('.'))}`,
+            path: `/photo/${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
             query: { parentGallery: currentRoute },
           }"
         >
-          <!-- <NuxtImg :src="`/photos/${photo.filename}`" loading="lazy"></NuxtImg> -->
-
           <div
-            :style="`background-image: url(/photos/${photo.filename})`"
+            :style="
+              photo.filename.includes('http')
+                ? `background-image: url(${photo.filename})`
+                : `background-image: url(/photos/${photo.filename})`
+            "
           ></div>
         </NuxtLink>
       </div>
+    </div>
+
+    <div
+      v-if="galleryViewMode === 'stream'"
+      class="inner-content stream"
+      v-for="(photo, index) in photosCatalogue.default.images"
+      :key="index"
+    >
+      <NuxtLink
+        :to="{
+          path: `/photo/${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: currentRoute },
+        }"
+      >
+        <NuxtImg
+          :src="
+            photo.filename.includes('http')
+              ? `${photo.filename}`
+              : `/photos/${photo.filename}`
+          "
+          loading="lazy"
+        ></NuxtImg>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -80,6 +109,8 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
 <style lang="scss" scoped>
 .container {
   display: flex;
+  background-color: #93cfd0;
+  // background-color: #f1f1f1;
 
   &.stream-view {
     scroll-snap-type: x mandatory;
@@ -116,6 +147,7 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
       justify-content: center;
       align-items: center;
       font-size: 0.5rem;
+      cursor: pointer;
 
       background-size: 24px 24px;
       background-repeat: no-repeat;
@@ -137,65 +169,57 @@ const toggleGalleryViewMode = (mode: GalleryViewMode) => {
 }
 
 .inner-content {
-  background-color: #93cfd0;
-  // background-color: #f1f1f1;
-}
-.inner-content.stream {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100dvh;
-  min-width: 100dvw;
-  scroll-snap-align: start;
+  &.grid {
+    margin: 0 auto;
+    // FOR DESKTOP
+    // --auto-grid-min-size: 16rem;
 
-  a {
-    img {
-      min-height: 60dvh;
-      max-height: 90dvh;
-      max-width: 90dvw;
-      aspect-ratio: auto;
-      object-fit: contain;
+    // FOR MOBILE
+    --auto-grid-min-size: 8rem;
+
+    padding: calc(40px + 0.8rem * 2) 0.8rem 0.8rem;
+
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--auto-grid-min-size), 1fr)
+    );
+
+    // grid-gap: 0.8rem;
+    grid-gap: 1.8rem;
+
+    width: 100dvw;
+    max-width: 1024px;
+    min-height: 100dvh;
+    grid-auto-rows: max-content;
+
+    a div {
+      background-size: contain;
+      // background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      aspect-ratio: 1/1;
     }
   }
-}
 
-.inner-content.grid {
-  // FOR DESKTOP
-  // --auto-grid-min-size: 16rem;
+  &.stream {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    min-width: 100dvw;
+    scroll-snap-align: start;
 
-  // FOR MOBILE
-  --auto-grid-min-size: 8rem;
-
-  padding: calc(40px + 0.8rem * 2) 0.8rem 0.8rem;
-
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(var(--auto-grid-min-size), 1fr)
-  );
-  grid-template-rows: max-content;
-
-  // grid-gap: 0.8rem;
-  grid-gap: 1.8rem;
-
-  width: 100dvw;
-  min-height: 100dvh;
-
-  // a img {
-  //   max-width: 100%;
-  //   max-height: 100%;
-  //   object-fit: contain;
-  //   // max-width: 40dvw;
-  //   // max-height: 40dvw;
-  // }
-
-  a div {
-    background-size: contain;
-    // background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    aspect-ratio: 1/1;
+    a {
+      img {
+        min-height: 70dvh;
+        max-height: 80dvh;
+        max-width: 80dvw;
+        aspect-ratio: auto;
+        object-fit: contain;
+      }
+    }
   }
 }
 </style>

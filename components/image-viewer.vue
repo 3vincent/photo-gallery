@@ -12,13 +12,13 @@ const props = defineProps({
 <template>
   <div class="container">
     <div class="image-container">
-      <img
+      <NuxtImg
         :src="
           photo.filename.includes('http')
             ? `${props.photo.filename}`
             : `/photos/${props.photo.filename}`
         "
-        :alt="`${props.photo.description}, ${props.photo.year}`"
+        :alt="`${props.photo.title}, ${props.photo.year}`"
       />
     </div>
 

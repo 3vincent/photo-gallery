@@ -120,6 +120,7 @@ onMounted(async () => {
           "
           loading="lazy"
           :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+          :alt="photo.title || photo.description"
         ></NuxtImg>
       </NuxtLink>
     </div>

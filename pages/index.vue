@@ -23,7 +23,7 @@ const mainContainerRef = ref<HTMLElement | null>(null)
 const router = useRouter()
 const currentRoute = computed(() => router.currentRoute.value.fullPath)
 
-const toggleGalleryViewMode = (mode: GalleryViewMode) => {
+const setGalleryViewMode = (mode: GalleryViewMode) => {
   if (galleryViewMode.value === mode) return
 
   galleryViewMode.value = mode
@@ -64,13 +64,13 @@ onMounted(async () => {
   >
     <div class="view-switch">
       <div
-        @click="toggleGalleryViewMode('stream')"
+        @click="setGalleryViewMode('stream')"
         class="stream"
         :class="{ active: galleryViewMode === 'stream' }"
       ></div>
 
       <div
-        @click="toggleGalleryViewMode('grid')"
+        @click="setGalleryViewMode('grid')"
         class="grid"
         :class="{ active: galleryViewMode === 'grid' }"
       ></div>

@@ -129,6 +129,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .container {
+  position: static;
   display: flex;
   background-color: #93cfd0;
   // background-color: #f1f1f1;
@@ -160,6 +161,7 @@ onMounted(async () => {
     right: 0.8rem;
     display: flex;
     column-gap: 0.8rem;
+    z-index: 10;
 
     > div {
       height: 30px;

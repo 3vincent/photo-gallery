@@ -168,19 +168,6 @@ onMounted(() => {
   z-index: 10;
   text-decoration: none;
 
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
-
   &:visited,
   &:link {
     color: black;

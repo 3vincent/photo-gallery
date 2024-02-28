@@ -71,19 +71,6 @@ const props = defineProps({
   padding: 0 0 4rem 0;
 
   p {
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      'Open Sans',
-      'Helvetica Neue',
-      sans-serif;
-
     color: white;
     font-size: 1rem;
     margin: 0;

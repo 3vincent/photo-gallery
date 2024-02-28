@@ -16,4 +16,16 @@ export default defineNuxtConfig({
     // provider: 'static',
     // staticFilename: '[publicPath]/[name]-[hash][ext]',
   },
+
+  css: ['~/assets/styles/index.scss'],
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "./assets/styles/general/variables.scss";',
+        },
+      },
+    },
+  },
 })

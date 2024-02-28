@@ -45,8 +45,7 @@ onMounted(async () => {
   const currentHash = router.currentRoute.value.hash
 
   if (currentHash) {
-    // to remove hash from the url
-    await navigateTo({ hash: '' })
+    router.replace({ hash: '' })
 
     if (galleryViewMode.value === 'stream') {
       const element = document.getElementById(currentHash.substring(1))

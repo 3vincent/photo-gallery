@@ -24,6 +24,26 @@ const photo = computed<Photo>(() => {
   )
 })
 
+const previousPhoto = computed<Photo>(() => {
+  return (
+    photosCatalogue['default'].images[photoIndexInCatalog - 1] ?? {
+      filename: 'error.jpg',
+      description: 'test',
+      year: '2019',
+    }
+  )
+})
+
+const nextPhoto = computed<Photo>(() => {
+  return (
+    photosCatalogue['default'].images[photoIndexInCatalog + 1] ?? {
+      filename: 'error.jpg',
+      description: 'test',
+      year: '2019',
+    }
+  )
+})
+
 const currentRouteQuery = router.currentRoute.value.query
   .parentGallery as String
 
@@ -44,7 +64,7 @@ onMounted(() => {
         timer = undefined
       }
 
-      if ((<Element>e.target).className === 'go-back-button') return
+      if ((<Element>e.target).classList.contains('link')) return
 
       timer = setTimeout(() => {
         showBackButton.value = false
@@ -59,13 +79,42 @@ onMounted(() => {
     <Transition>
       <NuxtLink
         v-if="currentRouteQuery && showBackButton"
-        class="go-back-button"
+        class="link go-back-button"
         :to="{
           path: `${currentRouteQuery as RouteLocationRaw}`,
           hash: `#${router.currentRoute.value.params.filename}`,
         }"
       >
         back to gallery
+      </NuxtLink>
+    </Transition>
+
+    <Transition name="fadeLeft">
+      <NuxtLink
+        v-if="photoIndexInCatalog !== 0 && showBackButton"
+        class="link prev-photo"
+        :to="{
+          path: `/photo/${photoIndexInCatalog}-${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: `${currentRouteQuery as RouteLocationRaw}` },
+        }"
+      >
+        Prev
+      </NuxtLink>
+    </Transition>
+
+    <Transition name="fadeRight">
+      <NuxtLink
+        v-if="
+          photoIndexInCatalog + 2 <= photosCatalogue['default'].images.length &&
+          showBackButton
+        "
+        class="link next-photo"
+        :to="{
+          path: `/photo/${photoIndexInCatalog + 2}-${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: `${currentRouteQuery as RouteLocationRaw}` },
+        }"
+      >
+        Next
       </NuxtLink>
     </Transition>
 
@@ -84,14 +133,35 @@ onMounted(() => {
   transform: translateY(-40px);
 }
 
+.fadeLeft-enter-active,
+.fadeLeft-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fadeLeft-enter-from,
+.fadeLeft-leave-to {
+  transform: translateX(-50px);
+}
+
+.fadeRight-enter-active,
+.fadeRight-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.fadeRight-enter-from,
+.fadeRight-leave-to {
+  transform: translateX(50px);
+}
+
 .container {
   background: rgba(24, 23, 23, 1);
 }
 
-.go-back-button {
+.link {
   background-color: rgb(62, 62, 62);
   display: inline-block;
   padding: 0.6rem;
+  font-size: 1rem;
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -114,6 +184,13 @@ onMounted(() => {
   &:visited,
   &:link {
     color: black;
+  }
+  &.go-back-button {
+    left: 100px;
+  }
+
+  &.next-photo {
+    right: 0;
   }
 }
 </style>

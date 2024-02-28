@@ -5,8 +5,6 @@ import { useViewModeStore } from '@/stores/view-mode'
 
 /**
  * TODO:
- *  - create buttons for prev/next image
- *  - implement Pinia store to store galleryViewMode state
  *  - implement gallery as dynamic gallery [gallery], read the gallery name from
  *    the json file
  *  - (need to fix the links then...🙄)
@@ -26,15 +24,21 @@ const router = useRouter()
 const currentRoute = computed(() => router.currentRoute.value.fullPath)
 
 const toggleGalleryViewMode = (mode: GalleryViewMode) => {
+  if (galleryViewMode.value === mode) return
+
   galleryViewMode.value = mode
 
-  const mainContainer = mainContainerRef.value
-  if (mainContainer)
-    mainContainer.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
+  if (mode === 'stream') {
+    nextTick(() => {
+      const mainContainer = mainContainerRef.value
+      if (mainContainer)
+        mainContainer.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'instant',
+        })
     })
+  }
 }
 
 onMounted(async () => {

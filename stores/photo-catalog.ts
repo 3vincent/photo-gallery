@@ -10,5 +10,20 @@ export const usePhotoCatalogStore = defineStore('photo-catalog', () => {
     galleryNames.value.map(galleryName => photosCatalogue[galleryName])
   )
 
-  return { galleryNames, galleries }
+  function getCurrentGallery(currentGalleryNameFromParams: string) {
+    return (
+      galleryNames.value
+        .map((galleryName, index) => {
+          if (galleryName === currentGalleryNameFromParams) {
+          }
+          return { id: index, name: galleryName }
+        })
+        .find(gallery => gallery.name === currentGalleryNameFromParams) ?? {
+        id: 0,
+        name: 'example',
+      }
+    )
+  }
+
+  return { galleryNames, galleries, getCurrentGallery }
 })

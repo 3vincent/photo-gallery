@@ -8,28 +8,19 @@ import type { GalleryViewMode } from '@/helpers/types'
  *  - implement info pages (CV etc.) with MarkDown?
  */
 
+const router = useRouter()
+
 const viewModeStore = useViewModeStore()
 const { galleryViewMode } = storeToRefs(viewModeStore)
 
-const PhotoCatalogStore = usePhotoCatalogStore()
-const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
+const photoCatalogStore = usePhotoCatalogStore()
+const { galleries, galleryNames } = storeToRefs(photoCatalogStore)
+
+const currentGallery = photoCatalogStore.getCurrentGallery(
+  router.currentRoute.value.params.gallery as string
+)
 
 const mainContainerRef = ref<HTMLElement | null>(null)
-
-const router = useRouter()
-
-const currentGallery = galleryNames.value
-  .map((galleryName, index) => {
-    if (galleryName === router.currentRoute.value.params.gallery) {
-    }
-    return { id: index, name: galleryName }
-  })
-  .find(
-    gallery => gallery.name === router.currentRoute.value.params.gallery
-  ) ?? {
-  id: 0,
-  name: 'example',
-}
 
 const setGalleryViewMode = (mode: GalleryViewMode) => {
   if (galleryViewMode.value === mode) return
@@ -60,6 +51,19 @@ onMounted(async () => {
 
       element?.scrollIntoView()
     }
+  }
+})
+
+onBeforeMount(async () => {
+  if (
+    !galleryNames.value.includes(
+      router.currentRoute.value.params.gallery as string
+    )
+  ) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page Not Found',
+    })
   }
 })
 </script>

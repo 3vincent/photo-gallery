@@ -1,23 +1,13 @@
 <script setup lang="ts">
 import type { Photo } from '@/helpers/types'
 
-const PhotoCatalogStore = usePhotoCatalogStore()
-const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
-
 const router = useRouter()
+const photoCatalogStore = usePhotoCatalogStore()
+const { galleries } = storeToRefs(photoCatalogStore)
 
-const currentGallery = galleryNames.value
-  .map((galleryName, index) => {
-    if (galleryName === router.currentRoute.value.params.gallery) {
-    }
-    return { id: index, name: galleryName }
-  })
-  .find(
-    gallery => gallery.name === router.currentRoute.value.params.gallery
-  ) ?? {
-  id: 0,
-  name: 'example',
-}
+const currentGallery = photoCatalogStore.getCurrentGallery(
+  router.currentRoute.value.params.gallery as string
+)
 
 const photoIndexInCatalog: number =
   parseInt(
@@ -27,15 +17,15 @@ const photoIndexInCatalog: number =
   ) - 1
 
 const photo = computed<Photo>(() => {
-  return galleries.value[0].photos[photoIndexInCatalog]
+  return galleries.value[currentGallery.id].photos[photoIndexInCatalog]
 })
 
 const previousPhoto = computed<Photo>(() => {
-  return galleries.value[0].photos[photoIndexInCatalog - 1]
+  return galleries.value[currentGallery.id].photos[photoIndexInCatalog - 1]
 })
 
 const nextPhoto = computed<Photo>(() => {
-  return galleries.value[0].photos[photoIndexInCatalog + 1]
+  return galleries.value[currentGallery.id].photos[photoIndexInCatalog + 1]
 })
 
 const showBackButton = ref(true)
@@ -95,8 +85,8 @@ onMounted(() => {
     <Transition name="fadeRight">
       <NuxtLink
         v-if="
-          photoIndexInCatalog + 2 <= galleries[0].photos.length &&
-          showBackButton
+          photoIndexInCatalog + 2 <=
+            galleries[currentGallery.id].photos.length && showBackButton
         "
         class="link next-photo"
         :to="{

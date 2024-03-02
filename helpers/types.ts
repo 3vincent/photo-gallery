@@ -8,8 +8,10 @@ export type Photo = {
 }
 
 export type Gallery = {
-  [key: string]: {
-    description: string
-    images: Photo[]
-  }
+  description: string
+  photos: Photo[]
+}
+
+export type GalleryData = {
+  [key: string]: Gallery
 }

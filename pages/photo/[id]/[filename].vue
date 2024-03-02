@@ -1,47 +1,30 @@
 <script setup lang="ts">
-import photosCatalogueRaw from '@/assets/photos-catalogue.json'
-import type { Gallery, Photo } from '@/helpers/types'
-import type { RouteLocationRaw } from '#vue-router'
+import type { Photo } from '@/helpers/types'
 
-const photosCatalogue: Gallery = photosCatalogueRaw
+const PhotoCatalogStore = usePhotoCatalogStore()
+const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
 
 const router = useRouter()
 
+// console.log(router.currentRoute.value.params.gallery)
+
 const photoIndexInCatalog: number =
   parseInt(
-    Array.isArray(router.currentRoute.value.params.filename)
-      ? router.currentRoute.value.params.filename[0].split('-')[0]
-      : router.currentRoute.value.params.filename.split('-')[0]
+    Array.isArray(router.currentRoute.value.params.id)
+      ? router.currentRoute.value.params.id[0]
+      : router.currentRoute.value.params.id
   ) - 1
 
 const photo = computed<Photo>(() => {
-  return (
-    photosCatalogue['default'].images[photoIndexInCatalog] ?? {
-      filename: 'error.jpg',
-      description: 'test',
-      year: '2019',
-    }
-  )
+  return galleries.value[0].photos[photoIndexInCatalog]
 })
 
 const previousPhoto = computed<Photo>(() => {
-  return (
-    photosCatalogue['default'].images[photoIndexInCatalog - 1] ?? {
-      filename: 'error.jpg',
-      description: 'test',
-      year: '2019',
-    }
-  )
+  return galleries.value[0].photos[photoIndexInCatalog - 1]
 })
 
 const nextPhoto = computed<Photo>(() => {
-  return (
-    photosCatalogue['default'].images[photoIndexInCatalog + 1] ?? {
-      filename: 'error.jpg',
-      description: 'test',
-      year: '2019',
-    }
-  )
+  return galleries.value[0].photos[photoIndexInCatalog + 1]
 })
 
 const currentRouteQuery = router.currentRoute.value.query
@@ -81,7 +64,8 @@ onMounted(() => {
         v-if="currentRouteQuery && showBackButton"
         class="link go-back-button"
         :to="{
-          path: `${currentRouteQuery as RouteLocationRaw}`,
+          path: `/`,
+          // hash: `#${router.currentRoute.value.params.filename}`,
           hash: `#${router.currentRoute.value.params.filename}`,
         }"
       >
@@ -94,8 +78,8 @@ onMounted(() => {
         v-if="photoIndexInCatalog !== 0 && showBackButton"
         class="link prev-photo"
         :to="{
-          path: `/photo/${photoIndexInCatalog}-${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
-          query: { parentGallery: `${currentRouteQuery as RouteLocationRaw}` },
+          path: `/photo/${photoIndexInCatalog}/${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: galleryNames[0] },
         }"
       >
         Prev
@@ -105,13 +89,13 @@ onMounted(() => {
     <Transition name="fadeRight">
       <NuxtLink
         v-if="
-          photoIndexInCatalog + 2 <= photosCatalogue['default'].images.length &&
+          photoIndexInCatalog + 2 <= galleries[0].photos.length &&
           showBackButton
         "
         class="link next-photo"
         :to="{
-          path: `/photo/${photoIndexInCatalog + 2}-${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
-          query: { parentGallery: `${currentRouteQuery as RouteLocationRaw}` },
+          path: `/photo/${photoIndexInCatalog + 2}/${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: galleryNames[0] },
         }"
       >
         Next

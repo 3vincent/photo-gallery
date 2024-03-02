@@ -1,7 +1,7 @@
 {
   "default": {
     "description": "A nice example gallery",
-    "images": [
+    "photos": [
       {
         "filename": "gorge-du-verdon-1.jpg",
         "title": "I live by the rocky sea lions",
@@ -58,6 +58,17 @@
         "title": "BLUE!",
         "description": "I live by the rocky sea lions",
         "year": "2008"
+      }
+    ]
+  },
+  "example": {
+    "description": "just a test",
+    "photos": [
+      {
+        "filename": "IMG_5191.JPG",
+        "title": "nice view",
+        "description": "A greasy landlord",
+        "year": "2011"
       }
     ]
   }

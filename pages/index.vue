@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import photosCatalogueRaw from '@/assets/photos-catalogue.json'
-import type { Gallery, GalleryViewMode } from '@/helpers/types'
-import { useViewModeStore } from '@/stores/view-mode'
+import type { GalleryViewMode } from '@/helpers/types'
 
 /**
  * TODO:
  *  - implement gallery as dynamic gallery [gallery], read the gallery name from
  *    the json file
- *  - (need to fix the links then...🙄)
- *  - need a menu then to switch the galleries
- *  - implement left bar?
+ *      - "gallery as param" -> will work when gallery is a dynamic route :)
+ *      - (need to fix the links then...🙄)
+ *      - need a menu then to switch the galleries
+ *      - implement left bar?
  *  - implement info pages (CV etc.) with MarkDown?
  */
 
-const photosCatalogue: Gallery = photosCatalogueRaw
-
 const viewModeStore = useViewModeStore()
 const { galleryViewMode } = storeToRefs(viewModeStore)
+
+const PhotoCatalogStore = usePhotoCatalogStore()
+const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
 
 const mainContainerRef = ref<HTMLElement | null>(null)
 
@@ -78,14 +78,14 @@ onMounted(async () => {
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div
-        v-for="(photo, index) in photosCatalogue.default.images"
+        v-for="(photo, index) in galleries[0].photos"
         class="image"
         :key="index"
       >
         <NuxtLink
           :to="{
-            path: `/photo/${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
-            query: { parentGallery: currentRoute },
+            path: `/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+            query: { parentGallery: galleryNames[0] },
           }"
         >
           <div
@@ -94,7 +94,7 @@ onMounted(async () => {
                 ? `background-image: url(${photo.filename})`
                 : `background-image: url(/photos/${photo.filename})`
             "
-            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+            :id="`${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           ></div>
         </NuxtLink>
       </div>
@@ -103,13 +103,13 @@ onMounted(async () => {
     <div
       v-if="galleryViewMode === 'stream'"
       class="inner-content stream"
-      v-for="(photo, index) in photosCatalogue.default.images"
+      v-for="(photo, index) in galleries[0].photos"
       :key="index"
     >
       <NuxtLink
         :to="{
-          path: `/photo/${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
-          query: { parentGallery: currentRoute },
+          path: `/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+          query: { parentGallery: galleryNames[0] },
         }"
       >
         <NuxtImg
@@ -119,7 +119,7 @@ onMounted(async () => {
               : `/photos/${photo.filename}`
           "
           loading="lazy"
-          :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+          :id="`${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           :alt="photo.title || photo.description"
         ></NuxtImg>
       </NuxtLink>

@@ -194,11 +194,11 @@ onMounted(async () => {
 .inner-content {
   &.grid {
     margin: 0 auto;
-    // FOR DESKTOP
-    // --auto-grid-min-size: 16rem;
-
-    // FOR MOBILE
     --auto-grid-min-size: 8rem;
+
+    @media (min-width: $_md) {
+      --auto-grid-min-size: 16rem;
+    }
 
     padding: calc(40px + 0.8rem * 2) 0.8rem 0.8rem;
 

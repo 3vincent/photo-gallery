@@ -6,7 +6,18 @@ const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
 
 const router = useRouter()
 
-// console.log(router.currentRoute.value.params.gallery)
+const currentGallery = galleryNames.value
+  .map((galleryName, index) => {
+    if (galleryName === router.currentRoute.value.params.gallery) {
+    }
+    return { id: index, name: galleryName }
+  })
+  .find(
+    gallery => gallery.name === router.currentRoute.value.params.gallery
+  ) ?? {
+  id: 0,
+  name: 'example',
+}
 
 const photoIndexInCatalog: number =
   parseInt(
@@ -26,9 +37,6 @@ const previousPhoto = computed<Photo>(() => {
 const nextPhoto = computed<Photo>(() => {
   return galleries.value[0].photos[photoIndexInCatalog + 1]
 })
-
-const currentRouteQuery = router.currentRoute.value.query
-  .parentGallery as String
 
 const showBackButton = ref(true)
 let timer: ReturnType<typeof setTimeout> | undefined
@@ -61,10 +69,10 @@ onMounted(() => {
   <div class="container">
     <Transition>
       <NuxtLink
-        v-if="currentRouteQuery && showBackButton"
+        v-if="currentGallery.name && showBackButton"
         class="link go-back-button"
         :to="{
-          path: `/`,
+          path: `/${currentGallery.name}/`,
           hash: `#${photoIndexInCatalog + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
         }"
       >
@@ -77,8 +85,7 @@ onMounted(() => {
         v-if="photoIndexInCatalog !== 0 && showBackButton"
         class="link prev-photo"
         :to="{
-          path: `/photo/${photoIndexInCatalog}/${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
-          query: { parentGallery: galleryNames[0] },
+          path: `/${currentGallery.name}/photo/${photoIndexInCatalog}/${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
         }"
       >
         Prev
@@ -93,8 +100,7 @@ onMounted(() => {
         "
         class="link next-photo"
         :to="{
-          path: `/photo/${photoIndexInCatalog + 2}/${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
-          query: { parentGallery: galleryNames[0] },
+          path: `/${currentGallery.name}/photo/${photoIndexInCatalog + 2}/${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
         }"
       >
         Next

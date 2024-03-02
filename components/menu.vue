@@ -1,23 +1,26 @@
 <template>
-  <button aria-label="Main User Menu" @click="burgerMenuClickHandler">
-    <div id="main-menu-button" :class="{ open: isMenuOpen }">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </button>
+  <div ref="menuContainer">
+    <button aria-label="Main User Menu" @click="burgerMenuClickHandler">
+      <div id="main-menu-button" :class="{ open: isMenuOpen }">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
 
-  <Transition>
-    <div v-if="isMenuOpen" class="menu-items-container">
-      <ul>
-        <li
-          v-for="galleryName in galleryNames"
-          @click="menuItemClickHandler(galleryName)"
-          >{{ galleryName }}</li
-        >
-      </ul>
-    </div>
-  </Transition>
+    <Transition>
+      <div v-if="isMenuOpen" class="menu-items-container">
+        <ul>
+          <li
+            v-for="galleryName in galleryNames"
+            @click="menuItemClickHandler(galleryName)"
+          >
+            {{ galleryName }}
+          </li>
+        </ul>
+      </div>
+    </Transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -35,6 +38,19 @@ const menuItemClickHandler = async (galleryName: string) => {
 
   await navigateTo(`/${galleryName}`)
 }
+
+const menuContainer: Ref<HTMLDivElement | null> = ref(null)
+
+const detectOutsideClick = (event: MouseEvent) => {
+  if (!isMenuOpen.value) return
+
+  const isClickInside = menuContainer.value?.contains(event.target as Node)
+  if (!isClickInside) isMenuOpen.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', detectOutsideClick, true)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -74,9 +90,11 @@ const menuItemClickHandler = async (galleryName: string) => {
       align-items: center;
       justify-content: center;
       margin-bottom: 0.6rem;
+      cursor: pointer;
+      border-radius: 0.4rem;
+
       &:hover {
         background-color: #ececec;
-        border-radius: 0.4rem;
       }
 
       &:last-child {

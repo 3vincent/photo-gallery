@@ -1,5 +1,5 @@
 {
-  "default": {
+  "Default": {
     "description": "A nice example gallery",
     "photos": [
       {
@@ -57,7 +57,7 @@
       }
     ]
   },
-  "example": {
+  "Example": {
     "description": "just a test",
     "photos": [
       {

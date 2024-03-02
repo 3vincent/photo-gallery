@@ -74,18 +74,24 @@ onBeforeMount(async () => {
     :class="{ 'stream-view': galleryViewMode === 'stream' }"
     ref="mainContainerRef"
   >
-    <div class="view-switch">
-      <div
-        @click="setGalleryViewMode('stream')"
-        class="stream"
-        :class="{ active: galleryViewMode === 'stream' }"
-      ></div>
+    <div class="user-menu-container">
+      <div class="view-switch">
+        <div
+          @click="setGalleryViewMode('stream')"
+          class="stream"
+          :class="{ active: galleryViewMode === 'stream' }"
+        ></div>
 
-      <div
-        @click="setGalleryViewMode('grid')"
-        class="grid"
-        :class="{ active: galleryViewMode === 'grid' }"
-      ></div>
+        <div
+          @click="setGalleryViewMode('grid')"
+          class="grid"
+          :class="{ active: galleryViewMode === 'grid' }"
+        ></div>
+      </div>
+
+      <div class="user-menu">
+        <Menu />
+      </div>
     </div>
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
@@ -165,37 +171,43 @@ onBeforeMount(async () => {
     }
   }
 
-  .view-switch {
+  .user-menu-container {
     position: absolute;
     top: 0.8rem;
-    right: 0.8rem;
-    display: flex;
-    column-gap: 0.8rem;
+    right: 1.6rem;
     z-index: 10;
+    display: flex;
+    column-gap: 1.6rem;
+    height: 30px;
 
-    > div {
-      height: 30px;
-      width: 30px;
+    .view-switch {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.5rem;
-      cursor: pointer;
+      column-gap: 0.8rem;
 
-      background-size: 24px 24px;
-      background-repeat: no-repeat;
-      background-position: center;
+      > div {
+        height: 30px;
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.5rem;
+        cursor: pointer;
 
-      &.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 2px;
-      }
-      &.grid {
-        background-image: url('assets/icons/grid-view.svg');
-      }
-      &.stream {
-        background-image: url('assets/icons/stream-view.svg');
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.active {
+          background-color: rgba(255, 255, 255, 0.2);
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 2px;
+        }
+        &.grid {
+          background-image: url('assets/icons/grid-view.svg');
+        }
+        &.stream {
+          background-image: url('assets/icons/stream-view.svg');
+        }
       }
     }
   }

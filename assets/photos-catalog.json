@@ -27,7 +27,8 @@
         "year": "2021"
       },
       {
-        "filename": "IMG_1318.jpeg"
+        "filename": "IMG_1318.jpeg",
+        "title": "UNIX"
       },
       {
         "filename": "https://drphibes.de/photo/flyer/01_apo_02.jpg",
@@ -43,9 +44,7 @@
       },
       {
         "filename": "https://drphibes.de/photo/flyer/01_apo_02.jpg",
-        "title": "RISES AGAIN",
-        "description": "An external example",
-        "year": "2002"
+        "description": "An external example"
       },
       {
         "filename": "IMG_3820.jpg",
@@ -54,10 +53,7 @@
         "year": "2016"
       },
       {
-        "filename": "gorge-du-verdon-1.jpg",
-        "title": "BLUE!",
-        "description": "I live by the rocky sea lions",
-        "year": "2008"
+        "filename": "gorge-du-verdon-1.jpg"
       }
     ]
   },
@@ -69,6 +65,12 @@
         "title": "nice view",
         "description": "A greasy landlord",
         "year": "2011"
+      },
+      {
+        "filename": "IMG_1318.jpeg",
+        "title": "UNIX",
+        "description": "Another example one",
+        "year": "2016"
       }
     ]
   }

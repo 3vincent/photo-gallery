@@ -21,7 +21,6 @@ const { galleries, galleryNames } = storeToRefs(PhotoCatalogStore)
 const mainContainerRef = ref<HTMLElement | null>(null)
 
 const router = useRouter()
-const currentRoute = computed(() => router.currentRoute.value.fullPath)
 
 const setGalleryViewMode = (mode: GalleryViewMode) => {
   if (galleryViewMode.value === mode) return
@@ -94,7 +93,7 @@ onMounted(async () => {
                 ? `background-image: url(${photo.filename})`
                 : `background-image: url(/photos/${photo.filename})`
             "
-            :id="`${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           ></div>
         </NuxtLink>
       </div>
@@ -119,7 +118,7 @@ onMounted(async () => {
               : `/photos/${photo.filename}`
           "
           loading="lazy"
-          :id="`${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+          :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           :alt="photo.title || photo.description"
         ></NuxtImg>
       </NuxtLink>

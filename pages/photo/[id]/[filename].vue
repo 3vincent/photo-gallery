@@ -65,8 +65,7 @@ onMounted(() => {
         class="link go-back-button"
         :to="{
           path: `/`,
-          // hash: `#${router.currentRoute.value.params.filename}`,
-          hash: `#${router.currentRoute.value.params.filename}`,
+          hash: `#${photoIndexInCatalog + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
         }"
       >
         back to gallery

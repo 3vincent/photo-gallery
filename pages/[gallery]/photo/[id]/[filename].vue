@@ -32,27 +32,33 @@ const showBackButton = ref(true)
 
 let timer: ReturnType<typeof setTimeout> | undefined
 
+const mouseMoveHandler = (e: MouseEvent) => {
+  window.requestAnimationFrame(() => {
+    showBackButton.value = true
+
+    if (timer !== undefined) {
+      clearTimeout(timer)
+      timer = undefined
+    }
+
+    if ((e.target as Element).classList.contains('link')) return
+
+    timer = setTimeout(() => {
+      showBackButton.value = false
+    }, 2000)
+  })
+}
+
 onMounted(() => {
   timer = setTimeout(() => {
     showBackButton.value = false
   }, 2000)
 
-  document.addEventListener('mousemove', e => {
-    window.requestAnimationFrame(() => {
-      showBackButton.value = true
+  document.addEventListener('mousemove', mouseMoveHandler)
+})
 
-      if (timer !== undefined) {
-        clearTimeout(timer)
-        timer = undefined
-      }
-
-      if ((<Element>e.target).classList.contains('link')) return
-
-      timer = setTimeout(() => {
-        showBackButton.value = false
-      }, 2000)
-    })
-  })
+onBeforeUnmount(() => {
+  document.removeEventListener('mousemove', mouseMoveHandler)
 })
 </script>
 

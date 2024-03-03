@@ -11,11 +11,23 @@
     <Transition>
       <div v-if="isMenuOpen" class="menu-items-container">
         <ul>
+          <h4>Galleries</h4>
           <li
             v-for="galleryName in galleryNames"
             @click="menuItemClickHandler(galleryName)"
           >
-            {{ galleryName }}
+            <NuxtLink :to="`/${galleryName}`">
+              {{ galleryName }}
+            </NuxtLink>
+          </li>
+        </ul>
+
+        <ul>
+          <h4>About</h4>
+          <li v-for="info in personalInfo" @click="menuItemClickHandler(info)">
+            <NuxtLink :to="`/${info}`">
+              {{ info }}
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -26,6 +38,9 @@
 <script setup lang="ts">
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
+
+// TODO:
+const personalInfo = ['CV', 'Contact']
 
 const isMenuOpen = ref(false)
 
@@ -45,11 +60,19 @@ const detectOutsideClick = (event: MouseEvent) => {
   if (!isMenuOpen.value) return
 
   const isClickInside = menuContainer.value?.contains(event.target as Node)
-  if (!isClickInside) isMenuOpen.value = false
+  if (!isClickInside) {
+    isMenuOpen.value = false
+
+    event.stopPropagation()
+  }
 }
 
 onMounted(() => {
   document.addEventListener('click', detectOutsideClick, true)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', detectOutsideClick)
 })
 </script>
 
@@ -70,11 +93,11 @@ onMounted(() => {
 .menu-items-container {
   position: absolute;
   width: max-content;
-  min-width: 200px;
-  max-width: 400px;
+  min-width: 240px;
+  max-width: min(100%, 400px);
   top: 3rem;
   right: 0rem;
-  border: 2px solid #2f4342;
+  border: 3px solid #2f4342;
   border-radius: 1rem;
   background-color: aliceblue;
   padding: 1rem;
@@ -83,21 +106,45 @@ onMounted(() => {
     padding: 0;
     margin: 0;
     list-style-type: none;
+    margin-bottom: 1rem;
+
+    > h4 {
+      color: rgba(47, 67, 66, 0.85);
+      padding: 0 0.4rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: -0.008em;
+    }
 
     li {
       min-height: 40px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 0.6rem;
-      cursor: pointer;
+      justify-content: flex-start;
+      // cursor: pointer;
       border-radius: 0.4rem;
+      padding: 0 0.4rem;
+
+      a,
+      a:link,
+      a:hover,
+      a:visited {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: rgba(47, 67, 66, 0.85);
+      }
 
       &:hover {
         background-color: #ececec;
       }
+    }
 
-      &:last-child {
+    &:last-child {
+      margin-bottom: 0;
+
+      li:last-child {
         margin-bottom: 0;
       }
     }

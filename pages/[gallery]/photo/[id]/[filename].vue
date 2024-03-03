@@ -29,6 +29,7 @@ const nextPhoto = computed<Photo>(() => {
 })
 
 const showBackButton = ref(true)
+
 let timer: ReturnType<typeof setTimeout> | undefined
 
 onMounted(() => {

@@ -3,8 +3,10 @@ import type { GalleryViewMode } from '@/helpers/types'
 
 /**
  * TODO:
- *  - need a menu then to switch the galleries
- *  - implement left bar?
+ *  - add config file json for personal info
+ *  - add markdown stuff for Text-pages, CV etc..
+ *  - add meta information
+ *  - make it work with gallery names as lower case and camel case  (look in stash!)
  *  - implement info pages (CV etc.) with MarkDown?
  */
 
@@ -74,6 +76,10 @@ onBeforeMount(async () => {
     :class="{ 'stream-view': galleryViewMode === 'stream' }"
     ref="mainContainerRef"
   >
+    <div class="user-logo">
+      <h1>raum0 portfolio</h1>
+    </div>
+
     <div class="user-menu-container">
       <div class="view-switch">
         <div
@@ -147,8 +153,8 @@ onBeforeMount(async () => {
 .container {
   position: static;
   display: flex;
-  background-color: #93cfd0;
-  // background-color: #f1f1f1;
+  // background-color: #93cfd0; // sky-stang,
+  background-color: rgba(238, 243, 243, 0.53);
 
   &.stream-view {
     scroll-snap-type: x mandatory;
@@ -171,9 +177,30 @@ onBeforeMount(async () => {
     }
   }
 
+  .user-logo {
+    position: absolute;
+    top: 1.8rem;
+    left: 1.6rem;
+    z-index: 10;
+    display: flex;
+    column-gap: 1.6rem;
+    height: 30px;
+
+    h1 {
+      color: #333;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: normal;
+      line-height: 1;
+      padding: 0;
+    }
+  }
+
   .user-menu-container {
     position: absolute;
-    top: 0.8rem;
+    top: 1.8rem;
     right: 1.6rem;
     z-index: 10;
     display: flex;
@@ -216,13 +243,13 @@ onBeforeMount(async () => {
 .inner-content {
   &.grid {
     margin: 0 auto;
-    --auto-grid-min-size: 8rem;
+    --auto-grid-min-size: 10rem;
 
     @media (min-width: $_md) {
-      --auto-grid-min-size: 16rem;
+      --auto-grid-min-size: 14rem;
     }
 
-    padding: calc(40px + 0.8rem * 2) 0.8rem 0.8rem;
+    padding: calc(40px + 1.8rem * 2) 0.8rem 0.8rem;
 
     display: grid;
     grid-template-columns: repeat(
@@ -230,7 +257,6 @@ onBeforeMount(async () => {
       minmax(var(--auto-grid-min-size), 1fr)
     );
 
-    // grid-gap: 0.8rem;
     grid-gap: 1.8rem;
 
     width: 100dvw;

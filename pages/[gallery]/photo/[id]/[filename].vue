@@ -5,7 +5,7 @@ const router = useRouter()
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleries } = storeToRefs(photoCatalogStore)
 
-const currentGallery = photoCatalogStore.getCurrentGallery(
+const currentGalleryInfo = photoCatalogStore.getGalleryMetaInfo(
   router.currentRoute.value.params.gallery as string
 )
 
@@ -17,15 +17,15 @@ const photoIndexInCatalog: number =
   ) - 1
 
 const photo = computed<Photo>(() => {
-  return galleries.value[currentGallery.id].photos[photoIndexInCatalog]
+  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog]
 })
 
 const previousPhoto = computed<Photo>(() => {
-  return galleries.value[currentGallery.id].photos[photoIndexInCatalog - 1]
+  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog - 1]
 })
 
 const nextPhoto = computed<Photo>(() => {
-  return galleries.value[currentGallery.id].photos[photoIndexInCatalog + 1]
+  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog + 1]
 })
 
 const showBackButton = ref(true)
@@ -66,10 +66,10 @@ onBeforeUnmount(() => {
   <div class="container">
     <Transition>
       <NuxtLink
-        v-if="currentGallery.name && showBackButton"
+        v-if="currentGalleryInfo.name && showBackButton"
         class="link go-back-button"
         :to="{
-          path: `/${currentGallery.name}/`,
+          path: `/${currentGalleryInfo.pathName}`,
           hash: `#${photoIndexInCatalog + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
         }"
       >
@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
         v-if="photoIndexInCatalog !== 0 && showBackButton"
         class="link prev-photo"
         :to="{
-          path: `/${currentGallery.name}/photo/${photoIndexInCatalog}/${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
+          path: `/${currentGalleryInfo.pathName}/photo/${photoIndexInCatalog}/${previousPhoto.filename.slice(previousPhoto.filename.lastIndexOf('/') + 1, previousPhoto.filename.lastIndexOf('.'))}`,
         }"
       >
         Prev
@@ -93,11 +93,11 @@ onBeforeUnmount(() => {
       <NuxtLink
         v-if="
           photoIndexInCatalog + 2 <=
-            galleries[currentGallery.id].photos.length && showBackButton
+            galleries[currentGalleryInfo.id].photos.length && showBackButton
         "
         class="link next-photo"
         :to="{
-          path: `/${currentGallery.name}/photo/${photoIndexInCatalog + 2}/${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
+          path: `/${currentGalleryInfo.pathName}/photo/${photoIndexInCatalog + 2}/${nextPhoto.filename.slice(nextPhoto.filename.lastIndexOf('/') + 1, nextPhoto.filename.lastIndexOf('.'))}`,
         }"
       >
         Next

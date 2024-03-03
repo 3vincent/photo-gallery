@@ -2,5 +2,7 @@
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
 
-await navigateTo(`/${galleryNames.value[0]}`)
+await navigateTo(
+  `/${photoCatalogStore.getGalleryMetaInfo(galleryNames.value[0]).pathName}`
+)
 </script>

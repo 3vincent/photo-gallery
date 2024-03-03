@@ -10,18 +10,31 @@ export const usePhotoCatalogStore = defineStore('photo-catalog', () => {
     galleryNames.value.map(galleryName => photosCatalogue[galleryName])
   )
 
-  function getCurrentGallery(currentGalleryNameFromParams: string) {
+  function getGalleryMetaInfo(galleryNameOrPathName: string): {
+    id: number
+    name: string
+    pathName: string
+  } {
     return (
       galleryNames.value
         .map((galleryName, index) => {
-          return { id: index, name: galleryName }
+          return {
+            id: index,
+            name: galleryName,
+            pathName: galleryName.toLowerCase().split(' ').join('-'),
+          }
         })
-        .find(gallery => gallery.name === currentGalleryNameFromParams) ?? {
+        .find(
+          gallery =>
+            gallery.name === galleryNameOrPathName ||
+            gallery.pathName === galleryNameOrPathName
+        ) ?? {
         id: 0,
-        name: 'example',
+        name: 'error',
+        pathName: 'error',
       }
     )
   }
 
-  return { galleryNames, galleries, getCurrentGallery }
+  return { galleryNames, galleries, getGalleryMetaInfo }
 })

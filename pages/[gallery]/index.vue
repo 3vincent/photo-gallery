@@ -6,7 +6,6 @@ import type { GalleryViewMode } from '@/helpers/types'
  *  - add config file json for personal info
  *  - add markdown stuff for Text-pages, CV etc..
  *  - add meta information
- *  - make it work with gallery names as lower case and camel case  (look in stash!)
  *  - implement info pages (CV etc.) with MarkDown?
  */
 
@@ -18,7 +17,7 @@ const { galleryViewMode } = storeToRefs(viewModeStore)
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleries, galleryNames } = storeToRefs(photoCatalogStore)
 
-const currentGallery = photoCatalogStore.getCurrentGallery(
+const currentGalleryInfo = photoCatalogStore.getGalleryMetaInfo(
   router.currentRoute.value.params.gallery as string
 )
 
@@ -58,9 +57,9 @@ onMounted(async () => {
 
 onBeforeMount(async () => {
   if (
-    !galleryNames.value.includes(
-      router.currentRoute.value.params.gallery as string
-    )
+    !galleryNames.value
+      .map(item => photoCatalogStore.getGalleryMetaInfo(item).pathName)
+      .includes(router.currentRoute.value.params.gallery as string)
   ) {
     throw createError({
       statusCode: 404,
@@ -102,13 +101,13 @@ onBeforeMount(async () => {
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div
-        v-for="(photo, index) in galleries[currentGallery.id].photos"
+        v-for="(photo, index) in galleries[currentGalleryInfo.id].photos"
         class="image"
         :key="index"
       >
         <NuxtLink
           :to="{
-            path: `/${currentGallery.name}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+            path: `/${currentGalleryInfo.pathName}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
           }"
         >
           <div
@@ -126,12 +125,12 @@ onBeforeMount(async () => {
     <div
       v-if="galleryViewMode === 'stream'"
       class="inner-content stream"
-      v-for="(photo, index) in galleries[currentGallery.id].photos"
+      v-for="(photo, index) in galleries[currentGalleryInfo.id].photos"
       :key="index"
     >
       <NuxtLink
         :to="{
-          path: `/${currentGallery.name}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+          path: `/${currentGalleryInfo.pathName}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
         }"
       >
         <NuxtImg
@@ -143,7 +142,7 @@ onBeforeMount(async () => {
           loading="lazy"
           :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           :alt="photo.title || photo.description"
-        ></NuxtImg>
+        />
       </NuxtLink>
     </div>
   </div>

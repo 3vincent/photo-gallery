@@ -14,9 +14,11 @@
           <h4>Galleries</h4>
           <li
             v-for="galleryName in galleryNames"
-            @click="menuItemClickHandler(galleryName)"
+            @click="menuItemClickHandler()"
           >
-            <NuxtLink :to="`/${galleryName}`">
+            <NuxtLink
+              :to="`/${photoCatalogStore.getGalleryMetaInfo(galleryName).pathName}`"
+            >
               {{ galleryName }}
             </NuxtLink>
           </li>
@@ -24,7 +26,7 @@
 
         <ul>
           <h4>About</h4>
-          <li v-for="info in personalInfo" @click="menuItemClickHandler(info)">
+          <li v-for="info in personalInfo" @click="menuItemClickHandler()">
             <NuxtLink :to="`/${info}`">
               {{ info }}
             </NuxtLink>
@@ -48,10 +50,8 @@ const burgerMenuClickHandler = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
-const menuItemClickHandler = async (galleryName: string) => {
+const menuItemClickHandler = async () => {
   isMenuOpen.value = false
-
-  await navigateTo(`/${galleryName}`)
 }
 
 const menuContainer: Ref<HTMLDivElement | null> = ref(null)
@@ -130,7 +130,8 @@ onUnmounted(() => {
       a:hover,
       a:visited {
         display: inline-block;
-        height: 100%;
+        height: 40px;
+        line-height: 40px;
         width: 100%;
         text-decoration: none;
         color: rgba(47, 67, 66, 0.85);

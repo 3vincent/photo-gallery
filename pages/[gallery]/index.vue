@@ -4,6 +4,7 @@ import type { GalleryViewMode } from '@/helpers/types'
 /**
  * TODO:
  *  - add config file json for personal info
+ *  - add keyboard navigation in galleries
  *  - add markdown stuff for Text-pages, CV etc..
  *  - add meta information
  *  - implement info pages (CV etc.) with MarkDown?
@@ -76,7 +77,11 @@ onBeforeMount(async () => {
     ref="mainContainerRef"
   >
     <div class="user-logo">
-      <h1>raum0 portfolio</h1>
+      <NuxtLink
+        :to="`/${photoCatalogStore.getGalleryMetaInfo(galleryNames[0]).pathName}`"
+      >
+        <h1>raum0 portfolio</h1>
+      </NuxtLink>
     </div>
 
     <div class="user-menu-container">
@@ -178,22 +183,28 @@ onBeforeMount(async () => {
 
   .user-logo {
     position: absolute;
-    top: 1.8rem;
     left: 1.6rem;
     z-index: 10;
     display: flex;
+    align-items: center;
+    -moz-column-gap: 1.6rem;
     column-gap: 1.6rem;
-    height: 30px;
+    height: 84px;
+    max-width: 200px;
 
-    h1 {
-      color: #333;
-      font-style: normal;
-      font-weight: 800;
-      font-size: 26px;
-      text-transform: uppercase;
-      letter-spacing: normal;
-      line-height: 1;
-      padding: 0;
+    a {
+      text-decoration: none;
+
+      h1 {
+        color: #333;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 26px;
+        text-transform: uppercase;
+        letter-spacing: normal;
+        line-height: 1;
+        padding: 0;
+      }
     }
   }
 

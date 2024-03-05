@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  modules: ['@nuxt/image', '@pinia/nuxt'],
+  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxt/content'],
 
   pinia: {
     storesDirs: ['./stores/**'],

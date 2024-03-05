@@ -42,7 +42,7 @@ const setGalleryViewMode = (mode: GalleryViewMode) => {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   const currentHash = router.currentRoute.value.hash
 
   if (currentHash) {
@@ -56,7 +56,7 @@ onMounted(async () => {
   }
 })
 
-onBeforeMount(async () => {
+onBeforeMount(() => {
   if (
     !galleryNames.value
       .map(item => photoCatalogStore.getGalleryMetaInfo(item).pathName)

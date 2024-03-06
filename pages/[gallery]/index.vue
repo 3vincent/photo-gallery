@@ -24,23 +24,22 @@ const currentGalleryInfo = photoCatalogStore.getGalleryMetaInfo(
 
 const mainContainerRef = ref<HTMLElement | null>(null)
 
-const setGalleryViewMode = (mode: GalleryViewMode) => {
-  if (galleryViewMode.value === mode) return
-
-  galleryViewMode.value = mode
-
-  if (mode === 'stream') {
-    nextTick(() => {
-      const mainContainer = mainContainerRef.value
-      if (mainContainer)
-        mainContainer.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'instant',
-        })
-    })
+watch(
+  () => galleryViewMode.value,
+  (mode: GalleryViewMode) => {
+    if (mode === 'stream') {
+      nextTick(() => {
+        const mainContainer = mainContainerRef.value
+        if (mainContainer)
+          mainContainer.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant',
+          })
+      })
+    }
   }
-}
+)
 
 onMounted(() => {
   const currentHash = router.currentRoute.value.hash
@@ -76,33 +75,7 @@ onBeforeMount(() => {
     :class="{ 'stream-view': galleryViewMode === 'stream' }"
     ref="mainContainerRef"
   >
-    <div class="user-logo">
-      <NuxtLink
-        :to="`/${photoCatalogStore.getGalleryMetaInfo(galleryNames[0]).pathName}`"
-      >
-        <h1>raum0 portfolio</h1>
-      </NuxtLink>
-    </div>
-
-    <div class="user-menu-container">
-      <div class="view-switch">
-        <div
-          @click="setGalleryViewMode('stream')"
-          class="stream"
-          :class="{ active: galleryViewMode === 'stream' }"
-        ></div>
-
-        <div
-          @click="setGalleryViewMode('grid')"
-          class="grid"
-          :class="{ active: galleryViewMode === 'grid' }"
-        ></div>
-      </div>
-
-      <div class="user-menu">
-        <Menu />
-      </div>
-    </div>
+    <TopMenu :position-absolute="true" :show-view-mode-switch="true" />
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div
@@ -208,46 +181,46 @@ onBeforeMount(() => {
     }
   }
 
-  .user-menu-container {
-    position: absolute;
-    top: 1.8rem;
-    right: 1.6rem;
-    z-index: 10;
-    display: flex;
-    column-gap: 1.6rem;
-    height: 30px;
+  // .user-menu-container {
+  //   position: absolute;
+  //   top: 1.8rem;
+  //   right: 1.6rem;
+  //   z-index: 10;
+  //   display: flex;
+  //   column-gap: 1.6rem;
+  //   height: 30px;
 
-    .view-switch {
-      display: flex;
-      column-gap: 0.8rem;
+  //   .view-switch {
+  //     display: flex;
+  //     column-gap: 0.8rem;
 
-      > div {
-        height: 30px;
-        width: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 0.5rem;
-        cursor: pointer;
+  //     > div {
+  //       height: 30px;
+  //       width: 30px;
+  //       display: flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //       font-size: 0.5rem;
+  //       cursor: pointer;
 
-        background-size: 24px 24px;
-        background-repeat: no-repeat;
-        background-position: center;
+  //       background-size: 24px 24px;
+  //       background-repeat: no-repeat;
+  //       background-position: center;
 
-        &.active {
-          background-color: rgba(255, 255, 255, 0.2);
-          background-color: rgba(0, 0, 0, 0.2);
-          border-radius: 2px;
-        }
-        &.grid {
-          background-image: url('assets/icons/grid-view.svg');
-        }
-        &.stream {
-          background-image: url('assets/icons/stream-view.svg');
-        }
-      }
-    }
-  }
+  //       &.active {
+  //         background-color: rgba(255, 255, 255, 0.2);
+  //         background-color: rgba(0, 0, 0, 0.2);
+  //         border-radius: 2px;
+  //       }
+  //       &.grid {
+  //         background-image: url('assets/icons/grid-view.svg');
+  //       }
+  //       &.stream {
+  //         background-image: url('assets/icons/stream-view.svg');
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .inner-content {

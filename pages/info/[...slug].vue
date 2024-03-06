@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <TopMenu />
     <div class="content">
       Some menu
       <ContentDoc />
@@ -9,14 +10,13 @@
 
 <style scoped lang="scss">
 .container {
-  display: flex;
-  justify-content: flex-start;
-  max-width: 1024px;
-  margin: 0 auto;
-  border: 2px solid red;
+  min-height: 100dvh;
 
   .content {
+    margin: 0 auto;
     max-width: 1024px;
+    padding: 1.6rem;
+    margin-top: 4rem;
   }
 }
 </style>

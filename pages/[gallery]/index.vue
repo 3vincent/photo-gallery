@@ -4,7 +4,6 @@ import type { GalleryViewMode } from '@/helpers/types'
 /**
  * TODO:
  *  - add config file json for personal info
- *  - add keyboard navigation in galleries
  *  - add markdown stuff for Text-pages, CV etc..
  *  - add meta information
  *  - implement info pages (CV etc.) with MarkDown?
@@ -180,47 +179,6 @@ onBeforeMount(() => {
       }
     }
   }
-
-  // .user-menu-container {
-  //   position: absolute;
-  //   top: 1.8rem;
-  //   right: 1.6rem;
-  //   z-index: 10;
-  //   display: flex;
-  //   column-gap: 1.6rem;
-  //   height: 30px;
-
-  //   .view-switch {
-  //     display: flex;
-  //     column-gap: 0.8rem;
-
-  //     > div {
-  //       height: 30px;
-  //       width: 30px;
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       font-size: 0.5rem;
-  //       cursor: pointer;
-
-  //       background-size: 24px 24px;
-  //       background-repeat: no-repeat;
-  //       background-position: center;
-
-  //       &.active {
-  //         background-color: rgba(255, 255, 255, 0.2);
-  //         background-color: rgba(0, 0, 0, 0.2);
-  //         border-radius: 2px;
-  //       }
-  //       &.grid {
-  //         background-image: url('assets/icons/grid-view.svg');
-  //       }
-  //       &.stream {
-  //         background-image: url('assets/icons/stream-view.svg');
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 .inner-content {

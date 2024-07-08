@@ -41,18 +41,32 @@ watch(
 )
 
 onMounted(() => {
+  handleHashScroll()
+})
+
+function handleHashScroll() {
   const currentHash = router.currentRoute.value.hash
 
-  if (currentHash) {
-    router.replace({ hash: '' })
+  if (!currentHash || galleryViewMode.value !== 'stream') return
 
-    if (galleryViewMode.value === 'stream') {
-      const element = document.getElementById(currentHash.substring(1))
+  const element = document.getElementById(currentHash.substring(1))
 
-      element?.scrollIntoView()
-    }
-  }
-})
+  if (!element) return
+
+  const elementPosition = element.getBoundingClientRect().left
+  scrollToPosition(mainContainerRef.value, elementPosition)
+
+  router.replace({ hash: '' })
+}
+
+function scrollToPosition(container: HTMLElement | null, position: number) {
+  if (!container) return
+
+  container.scrollTo({
+    left: position,
+    behavior: 'instant',
+  })
+}
 
 onBeforeMount(() => {
   if (

@@ -199,11 +199,6 @@ onBeforeMount(() => {
   &.grid {
     margin: 0 auto;
     --auto-grid-min-size: 10rem;
-
-    @media (min-width: $_md) {
-      --auto-grid-min-size: 14rem;
-    }
-
     padding: calc(40px + 1.8rem * 2) 0.8rem 0.8rem;
 
     display: grid;
@@ -218,6 +213,10 @@ onBeforeMount(() => {
     max-width: 1024px;
     min-height: 100dvh;
     grid-auto-rows: max-content;
+
+    @media (min-width: $_md) {
+      --auto-grid-min-size: 14rem;
+    }
 
     a div {
       background-size: contain;

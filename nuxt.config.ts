@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
+  compatibilityDate: '2024-07-20',
   modules: ['@nuxt/image', '@pinia/nuxt', '@nuxt/content'],
 
   pinia: {

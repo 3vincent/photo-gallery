@@ -27,8 +27,8 @@
         <ul>
           <h4>About</h4>
           <li v-for="info in personalInfo" @click="menuItemClickHandler()">
-            <NuxtLink :to="`/${info}`">
-              {{ info }}
+            <NuxtLink :to="`${info._path}`">
+              {{ info.title }}
             </NuxtLink>
           </li>
         </ul>
@@ -41,8 +41,11 @@
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
 
-// TODO:
-const personalInfo = ['CV', 'Contact']
+const { data: navigation } = await useAsyncData('navigation', () =>
+  fetchContentNavigation()
+)
+
+const personalInfo = navigation.value?.[0]?.children
 
 const isMenuOpen = ref(false)
 

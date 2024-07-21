@@ -7,7 +7,7 @@ date: July 19, 2024
 
 **Professional Photographer**
 
-[Email: jane.doe@example.com](mailto:jane.doe@example.com) | [Phone: +1-234-567-8901](tel:+12345678901) | [Website: www.janedoephotography.com](http://www.janedoephotography.com)
+[Email: jane.doe@example.com](mailto:jane.doe@example.com) | [Phone: +1-234-567-8901](tel:+12345678901) | [Website: www.janedoefictonalphotography.com](http://www.janedoefictonalphotography.com)
 
 ## Summary
 

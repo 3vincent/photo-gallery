@@ -4,9 +4,7 @@ import type { GalleryViewMode } from '@/helpers/types'
 /**
  * TODO:
  *  - add config file json for personal info
- *  - add markdown stuff for Text-pages, CV etc..
  *  - add meta information
- *  - implement info pages (CV etc.) with MarkDown?
  */
 
 const router = useRouter()

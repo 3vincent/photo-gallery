@@ -1,3 +1,8 @@
+---
+title: CV
+date: July 19, 2024
+---
+
 # CV Jane Doe
 
 **Professional Photographer**

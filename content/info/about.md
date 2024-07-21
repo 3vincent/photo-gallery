@@ -1,6 +1,9 @@
-# About Jane Doe
+---
+title: About
+date: July 19, 2024
+---
 
-![Jane Doe](path_to_image.jpg)
+# About Jane Doe
 
 ## Welcome to Jane Doe Photography
 

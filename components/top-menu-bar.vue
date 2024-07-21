@@ -4,7 +4,7 @@
       <NuxtLink
         :to="`/${photoCatalogStore.getGalleryMetaInfo(galleryNames[0]).pathName}`"
       >
-        <h1>raum0 portfolio</h1>
+        <h1>{{ pageInfo.pageTitle }}</h1>
       </NuxtLink>
     </div>
 
@@ -36,8 +36,11 @@ import type { GalleryViewMode } from '~/helpers/types'
 const viewModeStore = useViewModeStore()
 const { galleryViewMode } = storeToRefs(viewModeStore)
 
+const pageInfoStore = usePageInfoStore()
+const { pageInfo } = storeToRefs(pageInfoStore)
+
 const photoCatalogStore = usePhotoCatalogStore()
-const { galleries, galleryNames } = storeToRefs(photoCatalogStore)
+const { galleryNames } = storeToRefs(photoCatalogStore)
 
 const setGalleryViewMode = (mode: GalleryViewMode) => {
   if (galleryViewMode.value === mode) return

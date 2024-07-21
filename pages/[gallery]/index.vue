@@ -88,7 +88,7 @@ onBeforeMount(() => {
     :class="{ 'stream-view': galleryViewMode === 'stream' }"
     ref="mainContainerRef"
   >
-    <TopMenu :position-absolute="true" :show-view-mode-switch="true" />
+    <TopMenuBar :position-absolute="true" :show-view-mode-switch="true" />
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div

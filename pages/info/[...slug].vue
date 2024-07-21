@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <TopMenu />
+    <TopMenuBar />
+
     <div class="content">
-      Some menu
       <ContentDoc />
     </div>
   </div>

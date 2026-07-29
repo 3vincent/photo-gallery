@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GalleryViewMode } from '@/helpers/types'
+import type { GalleryViewMode } from '@/utils/types'
 
 /**
  * TODO:
@@ -18,6 +18,7 @@ const { galleries, galleryNames } = storeToRefs(photoCatalogStore)
 const currentGalleryInfo = photoCatalogStore.getGalleryMetaInfo(
   router.currentRoute.value.params.gallery as string
 )
+const currentGallery = computed(() => galleries.value[currentGalleryInfo.id]!)
 
 const mainContainerRef = ref<HTMLElement | null>(null)
 
@@ -82,17 +83,17 @@ onBeforeMount(() => {
 
 <template>
   <div
+    ref="mainContainerRef"
     class="container"
     :class="{ 'stream-view': galleryViewMode === 'stream' }"
-    ref="mainContainerRef"
   >
     <TopMenuBar :position-absolute="true" :show-view-mode-switch="true" />
 
     <div v-if="galleryViewMode === 'grid'" class="inner-content grid">
       <div
-        v-for="(photo, index) in galleries[currentGalleryInfo.id].photos"
-        class="image"
+        v-for="(photo, index) in currentGallery.photos"
         :key="index"
+        class="image"
       >
         <NuxtLink
           :to="{
@@ -100,40 +101,41 @@ onBeforeMount(() => {
           }"
         >
           <div
+            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
             :style="
               photo.filename.includes('http')
                 ? `background-image: url(${photo.filename})`
                 : `background-image: url(/photos/${photo.filename})`
             "
-            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
           ></div>
         </NuxtLink>
       </div>
     </div>
 
-    <div
-      v-if="galleryViewMode === 'stream'"
-      class="inner-content stream"
-      v-for="(photo, index) in galleries[currentGalleryInfo.id].photos"
-      :key="index"
-    >
-      <NuxtLink
-        :to="{
-          path: `/${currentGalleryInfo.pathName}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
-        }"
+    <template v-if="galleryViewMode === 'stream'">
+      <div
+        v-for="(photo, index) in currentGallery.photos"
+        :key="index"
+        class="inner-content stream"
       >
-        <NuxtImg
-          :src="
-            photo.filename.includes('http')
-              ? `${photo.filename}`
-              : `/photos/${photo.filename}`
-          "
-          loading="lazy"
-          :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
-          :alt="photo.title || photo.description"
-        />
-      </NuxtLink>
-    </div>
+        <NuxtLink
+          :to="{
+            path: `/${currentGalleryInfo.pathName}/photo/${index + 1}/${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`,
+          }"
+        >
+          <NuxtImg
+            :id="`${index + 1}-${photo.filename.slice(photo.filename.lastIndexOf('/') + 1, photo.filename.lastIndexOf('.'))}`"
+            :src="
+              photo.filename.includes('http')
+                ? `${photo.filename}`
+                : `/photos/${photo.filename}`
+            "
+            loading="lazy"
+            :alt="photo.title || photo.description"
+          />
+        </NuxtLink>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -212,7 +214,7 @@ onBeforeMount(() => {
     min-height: 100dvh;
     grid-auto-rows: max-content;
 
-    @media (min-width: $_md) {
+    @media (min-width: $md) {
       --auto-grid-min-size: 14rem;
     }
 

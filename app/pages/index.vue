@@ -3,6 +3,10 @@ const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
 
 await navigateTo(
-  `/${photoCatalogStore.getGalleryMetaInfo(galleryNames.value[0]).pathName}`
+  `/${photoCatalogStore.getGalleryMetaInfo(galleryNames.value[0] ?? '').pathName}`
 )
 </script>
+
+<template>
+  <div aria-hidden="true" />
+</template>

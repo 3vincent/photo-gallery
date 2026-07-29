@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Photo } from '@/helpers/types'
+import type { Photo } from '@/utils/types'
 
 const router = useRouter()
 const photoCatalogStore = usePhotoCatalogStore()
@@ -8,24 +8,22 @@ const { galleries } = storeToRefs(photoCatalogStore)
 const currentGalleryInfo = photoCatalogStore.getGalleryMetaInfo(
   router.currentRoute.value.params.gallery as string
 )
+const currentGallery = computed(() => galleries.value[currentGalleryInfo.id]!)
 
-const photoIndexInCatalog: number =
-  parseInt(
-    Array.isArray(router.currentRoute.value.params.id)
-      ? router.currentRoute.value.params.id[0]
-      : router.currentRoute.value.params.id
-  ) - 1
+const photoId = router.currentRoute.value.params.id
+const photoIndexInCatalog =
+  parseInt(Array.isArray(photoId) ? (photoId[0] ?? '') : (photoId ?? '')) - 1
 
 const photo = computed<Photo>(() => {
-  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog]
+  return currentGallery.value.photos[photoIndexInCatalog]!
 })
 
 const previousPhoto = computed<Photo>(() => {
-  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog - 1]
+  return currentGallery.value.photos[photoIndexInCatalog - 1]!
 })
 
 const nextPhoto = computed<Photo>(() => {
-  return galleries.value[currentGalleryInfo.id].photos[photoIndexInCatalog + 1]
+  return currentGallery.value.photos[photoIndexInCatalog + 1]!
 })
 
 const showBackButton = ref(true)
@@ -93,7 +91,7 @@ onBeforeUnmount(() => {
       <NuxtLink
         v-if="
           photoIndexInCatalog + 2 <=
-            galleries[currentGalleryInfo.id].photos.length && showBackButton
+            currentGallery.photos.length && showBackButton
         "
         class="link next-photo"
         :to="{

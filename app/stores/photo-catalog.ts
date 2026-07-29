@@ -1,5 +1,5 @@
 import photosCatalogueRaw from '@/assets/photos-catalog.json'
-import type { GalleryData } from '@/helpers/types'
+import type { GalleryData } from '@/utils/types'
 
 export const usePhotoCatalogStore = defineStore('photo-catalog', () => {
   const photosCatalogue: GalleryData = photosCatalogueRaw

@@ -14,6 +14,7 @@
           <h4>Galleries</h4>
           <li
             v-for="galleryName in galleryNames"
+            :key="galleryName"
             @click="menuItemClickHandler()"
           >
             <NuxtLink
@@ -26,8 +27,12 @@
 
         <ul>
           <h4>About</h4>
-          <li v-for="info in personalInfo" @click="menuItemClickHandler()">
-            <NuxtLink :to="`${info._path}`">
+          <li
+            v-for="info in personalInfo"
+            :key="info.path"
+            @click="menuItemClickHandler()"
+          >
+            <NuxtLink :to="info.path">
               {{ info.title }}
             </NuxtLink>
           </li>
@@ -42,7 +47,7 @@ const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
 
 const { data: navigation } = await useAsyncData('navigation', () =>
-  fetchContentNavigation()
+  queryCollectionNavigation('content')
 )
 
 const personalInfo = navigation.value?.[0]?.children

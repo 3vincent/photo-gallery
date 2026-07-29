@@ -1,9 +1,7 @@
 <template>
   <div class="menu-container" :class="{ 'pos-absolute': positionAbsolute }">
     <div class="user-logo">
-      <NuxtLink
-        :to="`/${photoCatalogStore.getGalleryMetaInfo(galleryNames[0]).pathName}`"
-      >
+      <NuxtLink :to="homePath">
         <h1>{{ pageInfo.pageTitle }}</h1>
       </NuxtLink>
     </div>
@@ -11,15 +9,15 @@
     <div class="user-menu-container">
       <div v-if="showViewModeSwitch" class="view-switch">
         <div
-          @click="setGalleryViewMode('stream')"
           class="stream"
           :class="{ active: galleryViewMode === 'stream' }"
+          @click="setGalleryViewMode('stream')"
         ></div>
 
         <div
-          @click="setGalleryViewMode('grid')"
           class="grid"
           :class="{ active: galleryViewMode === 'grid' }"
+          @click="setGalleryViewMode('grid')"
         ></div>
       </div>
 
@@ -31,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GalleryViewMode } from '~/helpers/types'
+import type { GalleryViewMode } from '~/utils/types'
 
 const viewModeStore = useViewModeStore()
 const { galleryViewMode } = storeToRefs(viewModeStore)
@@ -41,6 +39,9 @@ const { pageInfo } = storeToRefs(pageInfoStore)
 
 const photoCatalogStore = usePhotoCatalogStore()
 const { galleryNames } = storeToRefs(photoCatalogStore)
+const homePath = computed(
+  () => `/${photoCatalogStore.getGalleryMetaInfo(galleryNames.value[0] ?? '').pathName}`
+)
 
 const setGalleryViewMode = (mode: GalleryViewMode) => {
   if (galleryViewMode.value === mode) return
@@ -48,7 +49,7 @@ const setGalleryViewMode = (mode: GalleryViewMode) => {
   galleryViewMode.value = mode
 }
 
-const props = defineProps({
+defineProps({
   positionAbsolute: { type: Boolean, default: false },
   showViewModeSwitch: { type: Boolean, default: false },
 })

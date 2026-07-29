@@ -1,16 +1,10 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
-
 export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: true,
   },
-  compatibilityDate: '2024-07-20',
-  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxt/content'],
-
-  pinia: {
-    storesDirs: ['./stores/**'],
-  },
+  compatibilityDate: '2026-07-29',
+  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxt/content', '@nuxt/eslint'],
 
   image: {
     format: ['webp'],
@@ -24,7 +18,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "./assets/styles/general/variables.scss";',
+          additionalData: '@use "~/assets/styles/general/variables.scss" as *;',
         },
       },
     },

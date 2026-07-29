@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import type { Photo } from '@/helpers/types'
+import type { Photo } from '@/utils/types'
 
 const props = defineProps({
   photo: {
     type: Object as PropType<Photo>,
-    default: { filename: 'error.jpg', description: 'test', year: '2019' },
+    default: () => ({
+      filename: 'error.jpg',
+      description: 'test',
+      year: '2019',
+    }),
   },
 })
 </script>

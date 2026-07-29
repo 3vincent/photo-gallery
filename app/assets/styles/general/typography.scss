@@ -1,3 +1,5 @@
+@use './variables.scss' as *;
+
 html {
   font-family:
     system-ui,
@@ -18,7 +20,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 
-  @media screen and (min-width: $_md) {
+  @media screen and (min-width: $md) {
     font-size: 16px;
   }
 }

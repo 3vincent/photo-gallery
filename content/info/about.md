@@ -1,49 +1,32 @@
 ---
 title: About
-date: July 19, 2024
+description: Quiet stories of people, places, and the light between them.
+date: 2026-07-29
 ---
 
-# About Jane Doe
+## Photographs that feel lived in
 
-## Welcome to Jane Doe Photography
+I’m **Jane Doe**, an independent photographer based in Brooklyn, New York. My work sits between portraiture, travel, and documentary photography—observant, natural, and grounded in real moments.
 
-Hello! I’m Jane Doe, a passionate and professional photographer based in New York, NY. With over a decade of experience, I specialize in capturing life's most beautiful moments across a variety of photography genres including portrait, landscape, and event photography.
+I’m drawn to small gestures and honest details: late-afternoon light across a room, the pause before a laugh, or the geometry of a city waking up. Whether I’m working with a person, a brand, or a landscape, I approach each assignment with curiosity and a light footprint.
 
-## My Journey
+> The best photographs don’t interrupt a moment. They help us notice it.
 
-My love for photography started at a young age, and I pursued my passion by earning a Bachelor of Fine Arts in Photography from New York University's Tisch School of the Arts. Since then, I have dedicated myself to honing my craft and exploring the endless possibilities that photography offers.
+## What I photograph
 
-## My Work
+- **Portraits** — relaxed editorial, artist, and family sessions
+- **Stories** — events, travel essays, and documentary commissions
+- **Places** — hospitality, architecture, and interiors
+- **Campaigns** — thoughtful imagery for independent brands and publications
 
-I believe that every photograph tells a unique story, and my goal is to bring those stories to life through my lens. Whether it’s the joy of a wedding, the serenity of a landscape, or the character in a portrait, I strive to capture the essence of my subjects with authenticity and creativity.
+## A considered process
 
-### Services I Offer
+Every project begins with a conversation. We’ll shape a simple brief, choose the right setting and pace, and leave enough room for something unexpected to happen. After the shoot, I make a careful edit and deliver a cohesive set of high-resolution, color-finished images.
 
-- **Portrait Photography**: Capturing individual and family portraits with a focus on personality and emotion.
-- **Event Photography**: Documenting weddings, corporate events, and other special occasions with an eye for detail and storytelling.
-- **Landscape Photography**: Exploring the beauty of nature and urban environments through my travels.
-- **Editorial and Commercial Photography**: Providing high-quality images for magazines, advertisements, and business use.
+I work throughout New York and travel for selected commissions.
 
-## Awards and Exhibitions
+## Let’s make something memorable
 
-My work has been recognized with several awards, including:
+Have a story, place, or person you want to document? [Start a conversation](mailto:studio@janedoe.example) and tell me what you have in mind.
 
-- **Best Wedding Photographer**, WeddingWire Couples' Choice Awards, 2022
-- **First Place**, National Geographic Photo Contest, 2020
-- **Top 10 Finalist**, International Photography Awards, 2018
-
-I have also had the honor of showcasing my work in various exhibitions:
-
-- "Moments in Time" - Solo Exhibition at ArtSpace Gallery, 2023
-- "Cityscapes" - Group Exhibition at Downtown Art Center, 2021
-- "Portraits of Life" - Solo Exhibition at Modern Art Museum, 2019
-
-## Let’s Create Something Beautiful
-
-I am always excited to collaborate on new projects and bring creative visions to life. If you have a project in mind or would like to book a session, feel free to [contact me](mailto:jane.doe@example.com).
-
-Thank you for visiting my page. I look forward to working with you and capturing your special moments!
-
----
-
-_Note: This page is a fictional example created for illustrative purposes._
+_Jane Doe Studio is a fictional portfolio created for this demonstration._

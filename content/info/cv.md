@@ -1,80 +1,54 @@
 ---
-title: CV
-date: July 19, 2024
+title: Selected CV
+description: Experience, exhibitions, and commissions from a fictional photographic practice.
+date: 2026-07-29
 ---
 
-# CV Jane Doe
+## Jane Doe
 
-**Professional Photographer**
+**Photographer & visual storyteller**  
+Brooklyn, New York · Available worldwide  
+[studio@janedoe.example](mailto:studio@janedoe.example) · [Instagram](https://instagram.com/)
 
-[Email: jane.doe@example.com](mailto:jane.doe@example.com) | [Phone: +1-234-567-8901](tel:+12345678901) | [Website: www.janedoefictonalphotography.com](http://www.janedoefictonalphotography.com)
+## Practice
 
-## Summary
+Jane Doe creates warm, restrained photography for editorial, cultural, and commercial clients. Her practice combines documentary instinct with a refined approach to composition, natural light, and color.
 
-Creative and detail-oriented professional photographer with over 10 years of experience capturing moments across various genres including portrait, landscape, and event photography. Skilled in both digital and film photography, with a strong eye for composition and lighting. Passionate about telling stories through images and consistently delivering high-quality results to clients.
+## Selected commissions
 
-## Skills
+### Independent photographer · 2017—present
 
-- **Photography**: Portrait, Landscape, Event, Product, Fashion
-- **Editing Software**: Adobe Photoshop, Lightroom, Capture One, GIMP
-- **Technical Skills**: Camera Operation, Lighting Setup, Photo Retouching, Color Correction
-- **Other**: Creative Direction, Client Management, Project Management
+- Editorial portraiture for artists, designers, and small publications
+- Visual stories for boutique hotels and destination brands
+- Campaign photography for independent fashion and lifestyle studios
+- Documentary coverage of cultural events and community projects
 
-## Experience
+### Studio photographer, North & Co. · 2013—2017
 
-### Senior Photographer
+- Produced still-life and portrait assignments from concept through delivery
+- Collaborated with art directors, stylists, producers, and retouchers
+- Developed consistent lighting and color workflows across campaigns
 
-**Freelance | New York, NY**  
-_January 2015 - Present_
+## Selected exhibitions
 
-- Photograph a wide range of subjects including portraits, weddings, corporate events, and editorial work.
-- Collaborate with clients to understand their vision and deliver images that meet their expectations.
-- Edit and retouch photos using Adobe Photoshop and Lightroom to enhance image quality.
-- Manage multiple projects simultaneously and ensure timely delivery of final products.
-- Maintain and organize an extensive portfolio of work for client presentations and marketing purposes.
+- **Soft Edges**, Fieldwork Gallery, New York — 2025
+- **Near & Far**, Assembly Space, Copenhagen — 2023
+- **After the Rain**, Common Ground, London — 2021
+- **New American Photographs**, group exhibition, Chicago — 2019
 
-### Assistant Photographer
+## Recognition
 
-**Glamour Shots | New York, NY**  
-_June 2010 - December 2014_
-
-- Assisted lead photographers during shoots by setting up lighting, handling equipment, and posing subjects.
-- Edited and retouched images under the supervision of senior photographers.
-- Managed studio schedules, client communications, and photo deliveries.
-- Developed and maintained relationships with clients, ensuring high levels of customer satisfaction.
+- LensCulture Portrait Awards, juror’s selection — 2024
+- American Photography, selected image — 2022
+- Magenta Foundation Flash Forward, finalist — 2020
 
 ## Education
 
-### Bachelor of Fine Arts in Photography
+**BFA, Photography and Imaging**  
+Tisch School of the Arts, New York University — 2013
 
-**New York University, Tisch School of the Arts | New York, NY**  
-_Graduated: May 2010_
+## Clients
 
-- Specialized in digital and film photography.
-- Completed coursework in lighting techniques, photojournalism, and image editing.
-- Participated in several exhibitions and received accolades for outstanding photography projects.
+Kinfolk · Monocle · The New York Times Magazine · Apartamento · Ace Hotel · Aesop · Patagonia
 
-## Certifications
-
-- Adobe Certified Expert (ACE) in Photoshop
-- Certified Professional Photographer (CPP) by the Professional Photographers of America (PPA)
-
-## Exhibitions
-
-- "Moments in Time" - Solo Exhibition at ArtSpace Gallery, 2023
-- "Cityscapes" - Group Exhibition at Downtown Art Center, 2021
-- "Portraits of Life" - Solo Exhibition at Modern Art Museum, 2019
-
-## Awards
-
-- Best Wedding Photographer, WeddingWire Couples' Choice Awards, 2022
-- First Place, National Geographic Photo Contest, 2020
-- Top 10 Finalist, International Photography Awards, 2018
-
-## References
-
-Available upon request.
-
----
-
-_Note: This CV is a fictional example created for illustrative purposes and is not associated with any real individual._
+_All names, projects, clients, and distinctions on this page are fictional and provided as demo content._

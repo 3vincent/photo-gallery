@@ -7,6 +7,8 @@ export default defineContentConfig({
       source: '**/*.md',
       schema: z.object({
         title: z.string(),
+        description: z.string(),
+        date: z.string(),
       }),
     }),
   },
